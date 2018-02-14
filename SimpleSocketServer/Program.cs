@@ -60,6 +60,12 @@ namespace SimpleSocketServer
 
                 TcpClient client = new TcpClient();
                 client.BeginConnect(ipAddress, port, new AsyncCallback(ConnectionComplete), client);
+
+                Console.WriteLine("Write something");
+                string userInput = Console.ReadLine();
+                byte[] data = Encoding.UTF8.GetBytes(userInput);
+                NetworkStream stream = client.GetStream();
+                stream.Write(data, 0, data.Length);
             }
         }
 

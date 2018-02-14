@@ -51,6 +51,8 @@
                     return;
                 }
                 Stream.Read(BufferedData, CurrentBufferOffset, Client.Available);
+
+                Console.WriteLine(Encoding.UTF8.GetString(BufferedData));
                 CurrentBufferOffset += Client.Available;
             }
         }
