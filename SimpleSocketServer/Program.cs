@@ -81,6 +81,7 @@ namespace SimpleSocketServer
                     activeClient.Client = client;
                     activeClient.WorkerProcess = new BackgroundWorker();
                     activeClient.WorkerProcess.DoWork += new DoWorkEventHandler(activeClient.HandleClient);
+                    _Clients.Add(activeClient);
                     Console.WriteLine("A client connected.");
                 }
                 else

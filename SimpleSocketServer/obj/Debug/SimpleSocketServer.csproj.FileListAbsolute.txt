@@ -5,3 +5,10 @@ C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\obj\Debug\Sim
 C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.csproj.CoreCompileInputs.cache
 C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.exe
 C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.pdb
+C:\Users\Andrew\Documents\Code\_Source Control\GitHub\SimpleSocketServer\SimpleSocketServer\bin\Debug\SimpleSocketServer.exe.config
+C:\Users\Andrew\Documents\Code\_Source Control\GitHub\SimpleSocketServer\SimpleSocketServer\bin\Debug\SimpleSocketServer.exe
+C:\Users\Andrew\Documents\Code\_Source Control\GitHub\SimpleSocketServer\SimpleSocketServer\bin\Debug\SimpleSocketServer.pdb
+C:\Users\Andrew\Documents\Code\_Source Control\GitHub\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.csprojResolveAssemblyReference.cache
+C:\Users\Andrew\Documents\Code\_Source Control\GitHub\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.csproj.CoreCompileInputs.cache
+C:\Users\Andrew\Documents\Code\_Source Control\GitHub\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.exe
+C:\Users\Andrew\Documents\Code\_Source Control\GitHub\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.pdb
