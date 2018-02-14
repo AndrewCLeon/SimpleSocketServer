@@ -65,9 +65,16 @@ namespace SimpleSocketServer
 
         private static void ConnectionComplete(IAsyncResult result)
         {
-            Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine($"Connected...");
-            Console.ResetColor();
+            if(result.IsCompleted)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.WriteLine($"Connected...");
+                Console.ResetColor();
+                if(result.AsyncState is TcpClient)
+                {
+                    Console.WriteLine("Yup, Illuminiti confirmed.");
+                }
+            }
         }
 
         private static void WelcomeGuests(object sender, DoWorkEventArgs args)
