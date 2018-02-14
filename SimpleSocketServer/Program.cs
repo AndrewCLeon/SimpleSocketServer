@@ -15,10 +15,26 @@ namespace SimpleSocketServer
         private static int _Port;
         private static TcpListener _Server;
         private static string _Loopback = "127.0.0.1";
-        private static string _OurIp = "192.168.0.2";
+        private static string _OurIp = FindHostIp();
         private static readonly List<ActiveClient> _Clients = new List<ActiveClient>();
 
         private static BackgroundWorker _Bouncer;
+
+        private static string FindHostIp()
+        {
+            string response = null;
+            var host = Dns.GetHostEntry(Dns.GetHostName());
+            foreach (var ip in host.AddressList)
+            {
+                if (ip.AddressFamily == AddressFamily.InterNetwork)
+                {
+                    response = ip.ToString();
+                    continue;
+                }
+            }
+            return response ?? throw new InvalidOperationException("Unable to start server. You do not seem to be connected to the internet.");
+        }
+
         private static void Init()
         {
             Random rnd = new Random(_Clients.GetHashCode() * DateTime.Now.Second * DateTime.Now.Hour);
@@ -58,7 +74,7 @@ namespace SimpleSocketServer
         {
             while (true)
             {
-                if(_Server.Pending())
+                if (_Server.Pending())
                 {
                     TcpClient client = _Server.AcceptTcpClient();
                     ActiveClient activeClient = new ActiveClient();
