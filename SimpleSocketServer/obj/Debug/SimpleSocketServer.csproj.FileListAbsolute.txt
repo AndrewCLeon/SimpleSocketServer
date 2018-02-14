@@ -1,0 +1,7 @@
+C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\bin\Debug\SimpleSocketServer.exe.config
+C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\bin\Debug\SimpleSocketServer.exe
+C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\bin\Debug\SimpleSocketServer.pdb
+C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.csprojResolveAssemblyReference.cache
+C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.csproj.CoreCompileInputs.cache
+C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.exe
+C:\Users\Andrew\source\repos\SimpleSocketServer\SimpleSocketServer\obj\Debug\SimpleSocketServer.pdb
