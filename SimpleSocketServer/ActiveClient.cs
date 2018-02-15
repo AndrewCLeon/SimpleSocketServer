@@ -3,58 +3,57 @@
     using System;
     using System.ComponentModel;
     using System.Net.Sockets;
+    using System.Net.WebSockets;
     using System.Text;
+    using System.Threading;
 
     internal class ActiveClient : IDisposable
     {
-        internal ActiveClient()
+        internal ActiveClient(WebSocketContext socketContext)
         {
+            Context = socketContext;
+            Socket = Context.WebSocket;
 
+            WorkerProcess = new BackgroundWorker();
+            WorkerProcess.DoWork += new DoWorkEventHandler(this.HandleClient);
+            this.WorkerProcess.RunWorkerAsync();
         }
 
-        internal ActiveClient(TcpClient client, BackgroundWorker workerProcess)
-        {
-            Client = client;
-            WorkerProcess = workerProcess;
-        }
+        internal readonly CancellationToken _CancelToken = CancellationToken.None;
 
-        private NetworkStream _Stream;
-        private NetworkStream Stream
-        {
-            get
-            {
-                if (_Stream == null && Client != null)
-                {
-                    _Stream = Client.GetStream();
-                }
-                return _Stream;
-            }
-        }
+        internal WebSocketReceiveResult LastMessage { get; set; }
 
-        internal TcpClient Client { get; set; }
+        private WebSocketContext Context { get; set; }
+
+        internal WebSocket Socket { get; set; }
 
         internal BackgroundWorker WorkerProcess { get; set; }
 
         internal int CurrentBufferOffset { get; set; }
+
+        //Create a jagged array for buffered data history.
         internal byte[] BufferedData = new byte[8192];
 
-        internal void HandleClient(object sender, DoWorkEventArgs args)
+        internal async void HandleClient(object sender, DoWorkEventArgs args)
         {
-            while (true)
+            do
             {
-                while (!_Stream.DataAvailable) ;
+                LastMessage = await Socket.ReceiveAsync(new ArraySegment<byte>(BufferedData), System.Threading.CancellationToken.None);
 
-                if (Client.Available + CurrentBufferOffset >= 8192)
+                byte[] tempBuffer = new byte[LastMessage.Count];
+                for (int i = 0; i < LastMessage.Count; i++)
                 {
-                    byte[] message = Encoding.UTF8.GetBytes("Too big.");
-                    Client.GetStream().Write(message, 0, message.Length);
-                    return;
+                    tempBuffer[i] = BufferedData[i];
                 }
-                Stream.Read(BufferedData, CurrentBufferOffset, Client.Available);
-
-                Console.WriteLine(Encoding.UTF8.GetString(BufferedData));
-                CurrentBufferOffset += Client.Available;
+                Console.WriteLine(Encoding.UTF8.GetString(tempBuffer));
             }
+            while (LastMessage.MessageType != WebSocketMessageType.Close);
+
+            await Socket.CloseAsync(LastMessage.CloseStatus.Value, LastMessage.CloseStatusDescription, _CancelToken);
+            Socket.Dispose();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("Other end initiated disconnect.");
+            Console.ResetColor();
         }
 
         public void Dispose()
@@ -64,10 +63,11 @@
             {
                 WorkerProcess.CancelAsync();
             }
+            Socket.CloseAsync(WebSocketCloseStatus.NormalClosure, "", System.Threading.CancellationToken.None);
+
             BufferedData = null;
-            //network stream.
-            _Stream.Dispose();
-            Client.Dispose();
+
+            Socket.Dispose();
             //Client
             //Background worker.
         }
